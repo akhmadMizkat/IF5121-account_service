@@ -1,19 +1,3 @@
-import jwt
-from datetime import datetime, timedelta
-
-
-class GenerateToken:
-    """ Generate token for user, currenctly only jwt token"""
-    def __init__(self, secret_key) -> None:
-        self._secret_key = secret_key
-
-    def generate_jwt_token(self, payload, expiration_time_minutes=60):
-        payload['exp'] = datetime.utcnow() + timedelta(minutes=expiration_time_minutes)
-        token = jwt.encode(payload, self._secret_key, algorithm='HS256')
-        return token.decode('utf-8')  # Convert bytes to string for easier use
-
-
-
 class Account:
     def __init__(self) -> None:
         self._email = None 
