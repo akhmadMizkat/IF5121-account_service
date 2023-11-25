@@ -24,9 +24,10 @@ def login():
     
     user_service.email = email
     user_service.password = password
-    
-    if user_service.login():
-        return jsonify({'message': 'Login successful'})
+
+    user = user_service.login()
+    if user:
+        return jsonify(user)
     else:
         return jsonify({'message': 'Invalid credentials'})
 
@@ -53,8 +54,9 @@ def admin_login():
     admin_service.email = email
     admin_service.password = password
     
-    if admin_service.login():
-        return jsonify({'message': 'Admin login successful'})
+    admin = admin_service.login()
+    if admin:
+        return jsonify(admin)
     else:
         return jsonify({'message': 'Invalid admin credentials'})
     

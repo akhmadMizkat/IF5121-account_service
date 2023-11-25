@@ -42,7 +42,10 @@ class User(Account):
         self._membership_status = None
     
     def login(self)-> bool:
-        return {self.email : self._database.get_user_credentials() [self.email]} if self.email \
+        return {
+                'username' : self._email,
+                'role' : self._database.get_user_credentials()[self._email]['role']
+            } if self.email \
             in self._database.get_user_credentials() and self._database.get_user_credentials() \
                 [self.email]['password'] == self.password else False
     
@@ -69,15 +72,17 @@ class Admin(Account):
         if self.email in self._database.get_admin_credentials() and self._database.get_admin_credentials() \
           [self.email]['password'] == self.password:
             self._admin_number = self._database.admin_credentials[self.email]['admin_number']
-            return {self.email : self._database.get_admin_credentials()[self.email]}
+            return {
+                'username' : self._email,
+                'role' : self._database.get_admin_credentials()[self._email]['role']
+            }
         else:
             return False
         
     def reset_password(self, email, current_password, new_password):
         if email in self._database.get_admin_credentials() and self._database.get_admin_credentials()\
             [email]['password'] == current_password:
-            self._database.get_admin_credentials()[email]['password']\
-            = new_password
+            self._database.get_admin_credentials()[email]['password']= new_password
             print(self._database.get_admin_credentials())
             return True    
         else: 
