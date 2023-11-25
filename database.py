@@ -5,7 +5,6 @@
 
 from abc import abstractmethod, ABC
 
-
 class Database(ABC):
     """ Interface for database in account service """
 

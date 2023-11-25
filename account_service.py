@@ -29,9 +29,14 @@ def login():
 
     user = user_service.login()
     if user:
-        return jsonify(user)
+        # Authorized  user
+        response = jsonify(user)
+        response.status_code = 200
     else:
-        return jsonify({'message': 'Invalid credentials'})
+        # Unauthorized user
+        response = jsonify({'message': 'Invalid admin credentials'})
+        response.status_code = 401
+    return response
 
 # Route for resetting user password
 @app.route('/reset_password', methods=['POST'])
@@ -42,9 +47,12 @@ def reset_password():
     new_password = data['new_password']
     
     if user_service.reset_password(email,current_password, new_password):
-        return jsonify({'message': 'Password reset successful'})
+        response = jsonify({'message': 'Password reset successful'})
+        response.status_code = 200
     else:
-        return jsonify({'message': 'Failed to reset password'})
+        response = jsonify({'message': 'Failed to reset password'})
+        response.status_code = 500
+    return response
 
 # Route for admin login
 @app.route('/admin/login', methods=['POST'])
@@ -58,10 +66,15 @@ def admin_login():
     
     admin = admin_service.login()
     if admin:
-        return jsonify(admin)
+        # Authorized  user
+        response = jsonify(admin)
+        response.status_code = 200
     else:
-        return jsonify({'message': 'Invalid admin credentials'})
-    
+        # Unauthorized user
+        response = jsonify({'message': 'Invalid admin credentials'})
+        response.status_code = 401
+    return response
+
 # Route for admin reset password
 @app.route('/admin/reset_password', methods=['POST'])
 def admin_reset_password():
@@ -71,9 +84,13 @@ def admin_reset_password():
     new_password = data['new_password']
     
     if admin_service.reset_password(email,current_password, new_password):
-        return jsonify({'message': 'Password reset successful'})
+        response = jsonify({'message': 'Password reset successful'})
+        response.status_code = 200
     else:
-        return jsonify({'message': 'Failed to reset password'})
+        response = jsonify({'message': 'Failed to reset password'})
+        response.status_code = 500
+    return response
+
 
 # start flask app
 if __name__ == '__main__':

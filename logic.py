@@ -59,11 +59,7 @@ class User(Account):
             return True
         else: 
             return False
-
-    def is_member(self) -> bool:
-        return True if self._database.get_user_credentials()[self.email]['membership_status']\
-           != None else  False
-
+        
 
 class Admin(Account):
 
