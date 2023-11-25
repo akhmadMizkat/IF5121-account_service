@@ -3,7 +3,7 @@ from logic import User, Admin
 from database import DictDatabase
 
 
-""" Start flask app"""
+""" Flask app"""
 app = Flask(__name__)
 
 # Initialize services
@@ -35,9 +35,10 @@ def login():
 def reset_password():
     data = request.get_json()
     email = data['email']
+    current_password = data['current_password']
     new_password = data['new_password']
     
-    if user_service.reset_password(email, new_password):
+    if user_service.reset_password(email,current_password, new_password):
         return jsonify({'message': 'Password reset successful'})
     else:
         return jsonify({'message': 'Failed to reset password'})
@@ -56,6 +57,22 @@ def admin_login():
         return jsonify({'message': 'Admin login successful'})
     else:
         return jsonify({'message': 'Invalid admin credentials'})
+    
+# Route for admin reset password
+@app.route('/admin/reset_password', methods=['POST'])
+def admin_reset_password():
+    data = request.get_json()
+    email = data['email']
+    current_password = data['current_password']
+    new_password = data['new_password']
+    
+    if admin_service.reset_password(email,current_password, new_password):
+        return jsonify({'message': 'Password reset successful'})
+    else:
+        return jsonify({'message': 'Failed to reset password'})
 
+
+
+# start flask app
 if __name__ == '__main__':
     app.run(debug=True)
