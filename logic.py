@@ -1,3 +1,4 @@
+""" Logic for account service execution """
 class Account:
     def __init__(self) -> None:
         self._email = None 
@@ -42,12 +43,14 @@ class User(Account):
         self._membership_status = None
     
     def login(self)-> bool:
-        return {
+        if self.email in self._database.get_user_credentials() and self._database.get_user_credentials() \
+                [self.email]['password'] == self.password:
+            return {
                 'username' : self._email,
                 'role' : self._database.get_user_credentials()[self._email]['role']
-            } if self.email \
-            in self._database.get_user_credentials() and self._database.get_user_credentials() \
-                [self.email]['password'] == self.password else False
+            } 
+        else:
+            return False
     
     def reset_password(self, email, current_password, new_password)-> bool:
         if email in self._database.get_user_credentials() and self._database.get_user_credentials()\
@@ -82,7 +85,7 @@ class Admin(Account):
     def reset_password(self, email, current_password, new_password):
         if email in self._database.get_admin_credentials() and self._database.get_admin_credentials()\
             [email]['password'] == current_password:
-            self._database.get_admin_credentials()[email]['password']= new_password
+            self._database.get_admin_credentials()[email]['password'] = new_password
             print(self._database.get_admin_credentials())
             return True    
         else: 

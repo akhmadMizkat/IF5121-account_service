@@ -1,7 +1,7 @@
+""" Main program """
 from flask import Flask, request, jsonify
 from logic import User, Admin
 from database import DictDatabase
-
 
 """ Flask app"""
 app = Flask(__name__)
@@ -9,11 +9,13 @@ app = Flask(__name__)
 # Initialize services
 user_service = User()
 admin_service = Admin()
-database = DictDatabase()
+
+user_database = DictDatabase()
+admin_database = DictDatabase()
 
 # set database for user and admin
-user_service.database = database
-admin_service.database = database 
+user_service.database = user_database
+admin_service.database = admin_database 
 
 # Route for user login
 @app.route('/login', methods=['POST'])
@@ -72,8 +74,6 @@ def admin_reset_password():
         return jsonify({'message': 'Password reset successful'})
     else:
         return jsonify({'message': 'Failed to reset password'})
-
-
 
 # start flask app
 if __name__ == '__main__':

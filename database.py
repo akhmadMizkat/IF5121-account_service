@@ -1,3 +1,8 @@
+""" Database access for account service. 
+    Currently, it uses python dictionary.
+    !!IMPROTANT data: email, password, role
+"""
+
 from abc import abstractmethod, ABC
 
 
@@ -17,7 +22,7 @@ class DictDatabase(Database):
     """ Implementation using simpledict data type objects in python 3"""
     user_credentials = {
         'sian@gmail.com' : {
-            'password' : 'akuganteng',
+            'password' : 'samsara89',
             'role' : 'user',
             'membership_status' : True,
             'number' : '001',
@@ -47,6 +52,11 @@ class DictDatabase(Database):
             'password' : 'lexus231',
             'role' : 'admin',
             'admin_number' : '001',
+        },
+        'cindy@studio21.com' : {
+            'password' : 'ram225',
+            'role' : 'admin',
+            'admin_number' : '002',
         },
     }
 
