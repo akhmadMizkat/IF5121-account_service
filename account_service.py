@@ -120,23 +120,23 @@ def update_status_membership():
     status_updated = member.update_status_membership(email, status)
     if status_updated:
         response = jsonify({'user_email': email,
-                            'message' : f'status payment updated to {status}'})
+                            'membership_status' : status})
         response.status_code = 200
     else:
         response = jsonify({'message': 'Email not found'})
         response.status_code = 404
     return response
 
-# Route for check status payment
-@app.route('/check-status-payment', methods=['POST'])
-def check_status_payment():
+# Route for check status membership
+@app.route('/check-status-membership', methods=['POST'])
+def check_status_membership():
     data = request.get_json()
     email = data['email']
     
-    status_payment = member.check_status_payment(email)
-    if status_payment:
+    status_membership = member.check_status_membership(email)
+    if status_membership:
         response = jsonify({'user_email': email,
-                            'status' : status_payment})
+                            'status' : status_membership})
         response.status_code = 200
     else:
         response = jsonify({'message': 'Email not found'})

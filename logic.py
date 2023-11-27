@@ -125,14 +125,14 @@ class Membership:
         self.USER_NUMBER += 1
         user_invoice = self._user_database.get_user_credentials()[user_email]['invoice'] = generate_mb_invoice
         self._user_database.get_user_credentials()[user_email]['expiry_date'] = self.NORMAL_MEMBERSHIP_EXPIRY
-        self._user_database.get_user_credentials()[user_email]['payment_status'] = 'Belum'
+        self._user_database.get_user_credentials()[user_email]['membership_status'] = False
         return (user_email, user_invoice)
 
-    def check_status_payment(self, user_email):
+    def check_status_membership(self, user_email):
         if(self._helper_check_email_not_valid(user_email)):
             return False
-
-        return self._user_database.get_user_credentials()[user_email]['payment_status']
+        #Not confusing boolean value 
+        return str(self._user_database.get_user_credentials()[user_email]['membership_status'])
 
     def update_status_membership(self, user_email, status):
         if self._helper_check_email_not_valid(user_email):
