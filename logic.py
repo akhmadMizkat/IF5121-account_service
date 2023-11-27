@@ -1,4 +1,8 @@
 """ Logic for account service execution """
+import random
+import string
+
+
 class Account:
     def __init__(self) -> None:
         self._email = None 
@@ -88,3 +92,77 @@ class Admin(Account):
             return False
 
 
+
+class Membership:
+    """ Create membership"""
+    NORMAL_MEMBERSHIP_EXPIRY = 30 #in days
+    USER_NUMBER = 1
+
+    def __init__(self) -> None:
+        self._user_database = None 
+        self._number = None
+        self._expiry_date = None 
+        self._user_email = None 
+        self._payment_status = None 
+
+    @property
+    def user_database(self):
+        return self._user_database
+    
+    @user_database.setter
+    def user_database(self, user_database):
+        self._user_database = user_database
+
+
+    def create_membership(self, user_email):
+        """ set membership """
+        if(self._helper_check_email_not_valid(user_email)):
+            return "email not found"
+        generate_mb_invoice = self.generate_booking_number()
+        self._user_database.get_user_credentials()[user_email]['number'] = self.USER_NUMBER
+        #update user number by 1
+        self.USER_NUMBER += 1
+        user_invoice = self._user_database.get_user_credentials()[user_email]['invoice'] = generate_mb_invoice
+        self._user_database.get_user_credentials()[user_email]['expiry_date'] = self.NORMAL_MEMBERSHIP_EXPIRY
+        return user_email, user_invoice
+
+    def check_status_payment(self, user_email):
+        if(self._helper_check_email_not_valid(user_email)):
+            return "email not found"
+        return self._user_database.get_user_credentials()[user_email]['payment_status']
+
+    def update_status_membership(self, user_email, status):
+        if(self._helper_check_email_not_valid(user_email)):
+            return "email not found"
+        self._user_database.get_user_credentials()[user_email]['payment_status'] = status
+
+    def generate_booking_number(self):
+        """ Generates token for purchasing membership"""
+        prefix = "MB"
+        random_part = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+        booking_number = prefix + random_part
+        return booking_number
+
+    def _helper_check_email_not_valid(self, user_email):
+        """ Checking email validatition"""
+        if user_email not in self._user_database.get_user_credentials().keys():
+            return True
+
+
+# test
+from database import *
+
+member = Membership()
+
+member.user_database = DictDatabase()
+
+payment_data = member.create_membership('sisan@gmail.com')
+print(payment_data)
+
+status = member.check_status_payment('siandsf@gmail.com')
+print(status)
+
+member.update_status_membership(status="Nunggak",user_email='sian@gmail.com')
+
+status = member.check_status_payment('sian@gmail.com')
+print(status)

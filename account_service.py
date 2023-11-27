@@ -92,6 +92,22 @@ def admin_reset_password():
     return response
 
 
+# Route for create membership
+@app.route('/admin/reset_password', methods=['POST'])
+def admin_reset_password():
+    data = request.get_json()
+    email = data['email']
+    current_password = data['current_password']
+    new_password = data['new_password']
+    
+    if admin_service.reset_password(email,current_password, new_password):
+        response = jsonify({'message': 'Password reset successful'})
+        response.status_code = 200
+    else:
+        response = jsonify({'message': 'Failed to reset password'})
+        response.status_code = 500
+    return response
+
 # start flask app
 if __name__ == '__main__':
     app.run(debug=True)

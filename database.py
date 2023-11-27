@@ -23,16 +23,16 @@ class DictDatabase(Database):
         'sian@gmail.com' : {
             'password' : 'samsara89',
             'role' : 'user',
-            'membership_status' : True,
-            'number' : '001',
+            'membership_status' : None,
+            'number' : None ,
             'expiry_date' : None,
-            'payment_status' : False
+            'payment_status' : 'belum',
         },
         'nisa@gmail.com' : {
             'password' : 'qwery123',
             'role' : 'user',
             'membership_status' : None,
-            'number' : '002',
+            'number' : None ,
             'expiry_date' : None,
             'payment_status' : 'belum'
         },
@@ -40,9 +40,9 @@ class DictDatabase(Database):
             'password' : 'husqivarna',
             'role' : 'user',
             'membership_status' : None ,
-            'number' : '003',
+            'number' : None ,
             'expiry_date' : None,
-            'payment_status' : False
+            'payment_status' : 'belum'
         }
     }
 
