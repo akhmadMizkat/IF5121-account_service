@@ -134,11 +134,12 @@ class Membership:
         return self._user_database.get_user_credentials()[user_email]['payment_status']
 
     def update_status_membership(self, user_email, status):
-        if(self._helper_check_email_not_valid(user_email)):
+        if self._helper_check_email_not_valid(user_email):
             return False
 
         self._user_database.get_user_credentials()[user_email]['payment_status'] = status
-
+        return True 
+    
     def generate_booking_number(self):
         """ Generates token for purchasing membership"""
         prefix = "MB"

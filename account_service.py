@@ -110,6 +110,23 @@ def create_membership():
         response.status_code = 404
     return response
 
+# Route for update status payment
+@app.route('/update-status-membership', methods=['PUT'])
+def update_status_membership():
+    data = request.get_json()
+    email = data['email']
+    status = data['status']
+    
+    status_updated = member.update_status_membership(email, status)
+    if status_updated:
+        response = jsonify({'user_email': email,
+                            'message' : f'status payment updated to {status}'})
+        response.status_code = 200
+    else:
+        response = jsonify({'message': 'Email not found'})
+        response.status_code = 404
+    return response
+
 # start flask app
 if __name__ == '__main__':
     app.run(debug=True)
