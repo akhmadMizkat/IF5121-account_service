@@ -117,23 +117,26 @@ class Membership:
     def create_membership(self, user_email):
         """ set membership """
         if(self._helper_check_email_not_valid(user_email)):
-            return "email not found"
+            return False
+
         generate_mb_invoice = self.generate_booking_number()
         self._user_database.get_user_credentials()[user_email]['number'] = self.USER_NUMBER
         #update user number by 1
         self.USER_NUMBER += 1
         user_invoice = self._user_database.get_user_credentials()[user_email]['invoice'] = generate_mb_invoice
         self._user_database.get_user_credentials()[user_email]['expiry_date'] = self.NORMAL_MEMBERSHIP_EXPIRY
-        return user_email, user_invoice
+        return (user_email, user_invoice)
 
     def check_status_payment(self, user_email):
         if(self._helper_check_email_not_valid(user_email)):
-            return "email not found"
+            return False
+
         return self._user_database.get_user_credentials()[user_email]['payment_status']
 
     def update_status_membership(self, user_email, status):
         if(self._helper_check_email_not_valid(user_email)):
-            return "email not found"
+            return False
+
         self._user_database.get_user_credentials()[user_email]['payment_status'] = status
 
     def generate_booking_number(self):
@@ -147,22 +150,3 @@ class Membership:
         """ Checking email validatition"""
         if user_email not in self._user_database.get_user_credentials().keys():
             return True
-
-
-# test
-from database import *
-
-member = Membership()
-
-member.user_database = DictDatabase()
-
-payment_data = member.create_membership('sisan@gmail.com')
-print(payment_data)
-
-status = member.check_status_payment('siandsf@gmail.com')
-print(status)
-
-member.update_status_membership(status="Nunggak",user_email='sian@gmail.com')
-
-status = member.check_status_payment('sian@gmail.com')
-print(status)

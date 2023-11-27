@@ -21,7 +21,7 @@ class DictDatabase(Database):
     """ Implementation using simpledict data type objects in python 3"""
     user_credentials = {
         'sian@gmail.com' : {
-            'password' : 'samsara89',
+            'password' : 'akunpengenlulus',
             'role' : 'user',
             'membership_status' : None,
             'number' : None ,
