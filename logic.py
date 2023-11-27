@@ -125,6 +125,7 @@ class Membership:
         self.USER_NUMBER += 1
         user_invoice = self._user_database.get_user_credentials()[user_email]['invoice'] = generate_mb_invoice
         self._user_database.get_user_credentials()[user_email]['expiry_date'] = self.NORMAL_MEMBERSHIP_EXPIRY
+        self._user_database.get_user_credentials()[user_email]['payment_status'] = 'Belum'
         return (user_email, user_invoice)
 
     def check_status_payment(self, user_email):

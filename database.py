@@ -26,7 +26,7 @@ class DictDatabase(Database):
             'membership_status' : None,
             'number' : None ,
             'expiry_date' : None,
-            'payment_status' : 'belum',
+            'payment_status' : None
         },
         'nisa@gmail.com' : {
             'password' : 'qwery123',
@@ -34,7 +34,7 @@ class DictDatabase(Database):
             'membership_status' : None,
             'number' : None ,
             'expiry_date' : None,
-            'payment_status' : 'belum'
+            'payment_status' : None
         },
         'dicky@yahoo.com' : {
             'password' : 'husqivarna',
@@ -42,7 +42,7 @@ class DictDatabase(Database):
             'membership_status' : None ,
             'number' : None ,
             'expiry_date' : None,
-            'payment_status' : 'belum'
+            'payment_status' : None
         }
     }
 
